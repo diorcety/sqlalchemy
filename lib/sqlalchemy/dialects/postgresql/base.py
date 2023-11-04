@@ -2227,7 +2227,7 @@ class PGDDLCompiler(compiler.DDLCompiler):
         preparer = self.preparer
         index = create.element
         self._verify_index_table(index)
-        text = "CREATE "
+        text = "\nCREATE "
         if index.unique:
             text += "UNIQUE "
 
