@@ -3003,6 +3003,7 @@ class PGDialect(default.DefaultDialect):
                 "ignore_search_path": False,
                 "tablespace": None,
                 "partition_by": None,
+                "with": {},
                 "with_oids": None,
                 "on_commit": None,
                 "inherits": None,
