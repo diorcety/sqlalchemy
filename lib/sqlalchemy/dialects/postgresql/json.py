@@ -6,6 +6,7 @@
 # the MIT License: https://www.opensource.org/licenses/mit-license.php
 # mypy: ignore-errors
 
+import json
 
 from .array import ARRAY
 from .array import array as _pg_array
@@ -321,5 +322,12 @@ class JSONB(JSON):
             return self.operate(
                 PATH_MATCH, other, result_type=sqltypes.Boolean
             )
+
+    def literal_processor(self, dialect):
+        string_processor = self.astext_type._cached_literal_processor(dialect)
+        def process(value):
+            return string_processor(json.dumps(value))
+
+        return process
 
     comparator_factory = Comparator
