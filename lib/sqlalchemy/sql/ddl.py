@@ -957,7 +957,7 @@ class SchemaGenerator(InvokeCreateDDLBase):
             )._invoke_with(self.connection)
 
             if hasattr(table, "indexes"):
-                for index in table.indexes:
+                for index in sorted(table.indexes, key=lambda x: x.name or str(x)):
                     self.traverse_single(index, create_ok=True)
 
             if (
@@ -972,7 +972,7 @@ class SchemaGenerator(InvokeCreateDDLBase):
                         SetColumnComment(column)._invoke_with(self.connection)
 
                 if self.dialect.supports_constraint_comments:
-                    for constraint in table.constraints:
+                    for constraint in sorted(table.constraints, key=lambda x: x.name or str(x)):
                         if constraint.comment is not None:
                             self.connection.execute(
                                 SetConstraintComment(constraint)
